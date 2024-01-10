@@ -3,7 +3,7 @@
     if element is added to the DOM after a timeout we can us findBy
 */
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, logRoles } from "@testing-library/react";
 import { Skills } from "./skills";
 
 describe('Application', () => {
@@ -38,12 +38,15 @@ describe('Application', () => {
     })
 
     test("start learning button is eventually displayed", async () => {
-        render(<Skills skills={skills} />);
+        const view = render(<Skills skills={skills} />);
+        logRoles(view.container)
+        // screen.debug();
         const startLearningButton = await screen.findByRole("button", {
             name: 'Start learning'
         }, {
             timeout: 2000,
         });
         expect(startLearningButton).toBeInTheDocument();
+        // screen.debug();
     })
 })
